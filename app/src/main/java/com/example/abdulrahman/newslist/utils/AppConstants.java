@@ -34,7 +34,7 @@ public final class AppConstants {
     // News Api Conctants
 
     public static final String  API_KEY="apiKey";
-    public static final String API_KEY_VALUE="8a7bbfe442da48a98df955d41a5b1903";
+    public static final String API_KEY_VALUE="b21d5b2f72c54a378c04ec4248178404";
 
     public static final String SOURCES="sources";
     public static final String SOURCES_USA_TODAY="usa-today";

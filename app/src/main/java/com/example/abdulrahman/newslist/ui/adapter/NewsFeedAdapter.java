@@ -172,7 +172,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     long dif=dateDiff.Difference();
                     if (dif!=0){
                         dateLayout.setVisibility(View.VISIBLE);
-                        newsDateItem.setText( newsFeedItem.getPublishedAt().substring(0, 10));
+                        newsDateItem.setText( newsItemArrayList.get(position+1).getPublishedAt());
+                    }else {
+                        dateLayout.setVisibility(View.GONE);
                     }
                 }
 
