@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NewsList</string>
+    <string name="some_error">some error occured</string>
+    <string name="network_available">Network available</string>
+    <string name="network_unavailable">Network unavailable</string>
+    <string name="facebook_id">128134607839983</string>
+
+</resources>
