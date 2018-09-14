@@ -31,7 +31,7 @@ public class PicassoImageLoader implements ImageLoader {
 
         picassoRequestManager
                 .load(URL)
-                 .placeholder(R.drawable.loading)
+                 .placeholder(R.drawable.usa_today)
                 .error(R.drawable.usa_today)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .resize(SCREEN_WIDTH, SCREEN_WIDTH / 2)
@@ -72,7 +72,7 @@ public class PicassoImageLoader implements ImageLoader {
     public void normalLoad(final ImageView imageView, final String URL) {
         picassoRequestManager
                 .load(URL)
-                .placeholder(R.drawable.loading)
+                .placeholder(R.drawable.usa_today)
                 .error(R.drawable.usa_today)
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .resize(SCREEN_WIDTH, SCREEN_WIDTH / 2)

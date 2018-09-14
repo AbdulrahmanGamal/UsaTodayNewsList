@@ -21,7 +21,9 @@ import com.example.abdulrahman.newslist.ui.adapter.NewsFeedAdapter;
 import com.example.abdulrahman.newslist.utils.AppConstants;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -211,6 +213,9 @@ public class MainActivity extends BaseActivity implements MainView  , OnCustomCl
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }    }
+        }
+    }
+
+
 }
 

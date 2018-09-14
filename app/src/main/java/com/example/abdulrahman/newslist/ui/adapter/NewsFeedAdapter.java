@@ -1,14 +1,13 @@
 package com.example.abdulrahman.newslist.ui.adapter;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.abdulrahman.newslist.R;
@@ -18,9 +17,9 @@ import com.example.abdulrahman.newslist.base.OnCustomClickListener;
 import com.example.abdulrahman.newslist.base.baseLib.ImageLoader;
 import com.example.abdulrahman.newslist.data.entities.NewsItem;
 import com.example.abdulrahman.newslist.utils.AppConstants;
-import com.squareup.picasso.Picasso;
+import com.example.abdulrahman.newslist.utils.DateDiff;
 
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,17 +29,19 @@ import butterknife.ButterKnife;
 
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-
-    public static final int DATE = 0;
-    public static final int VIEW_TYPE_NORMAL = 1;
     public int widthItem = CardView.LayoutParams.MATCH_PARENT;
     List<NewsItem> newsItemArrayList;
-    List<NewsItem> favListItems=new ArrayList<>();
     ImageLoader imageLoader;
     OnCustomClickListener mOnCustomClickListener;
     NewsItemViewHolder newsFeedViewHolder;
     Context mContext;
     int FAV_LIST_FLAG=0;
+
+
+    public static final int TYPE_NORMAL= 1;
+
+
+    public static final int TYPE_EMPTY= 2;
 
 
     @Inject
@@ -58,7 +59,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         switch (viewType) {
-            case VIEW_TYPE_NORMAL: {
+            case TYPE_NORMAL: {
                 newsFeedViewHolder = new NewsItemViewHolder(
                         LayoutInflater.from(mContext).inflate(R.layout.news_item, parent, false));
                 ViewGroup.LayoutParams layoutParams = newsFeedViewHolder.itemView.getLayoutParams();
@@ -69,19 +70,11 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
                 return newsFeedViewHolder;
             }
-
-            case DATE: {
-
-
-            }
-
-
-            default: {
+            default:{
                 EmptyViewHolder emptyViewHolder = new EmptyViewHolder(
                         LayoutInflater.from(mContext).inflate(R.layout.empty_item, parent, false), mOnCustomClickListener, this, null);
                 return emptyViewHolder;
             }
-
         }
     }
 
@@ -103,7 +96,11 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.onBind(position);
+        try {
+            holder.onBind(position);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -120,25 +117,30 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public int getItemViewType(int position) {
         if (newsItemArrayList != null && newsItemArrayList.size() > 0) {
-            return VIEW_TYPE_NORMAL;
+            return TYPE_NORMAL;
         } else {
-            return DATE;
+            return TYPE_EMPTY;
         }
     }
 
-    ////------------------
+    ////------------------News View Holder
 
     public class NewsItemViewHolder extends BaseViewHolder {
 
 
         @BindView(R.id.newsName)
         TextView newsNameTextView;
-        @BindView(R.id.newsTime)
+        @BindView(R.id.newsDate)
         TextView newsTimeTextView;
         @BindView(R.id.newsImageView)
         ImageView newsImageView;
         @BindView(R.id.starImageView)
         ImageView starImageView;
+
+        @BindView(R.id.dateLayout)
+        LinearLayout dateLayout;
+        @BindView(R.id.newsDateItem)
+        TextView newsDateItem;
 
 
 
@@ -149,7 +151,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
 
-        public void onBind(int position) {
+        public void onBind(int position) throws ParseException {
             super.onBind(position);
 
 
@@ -158,7 +160,22 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             newsNameTextView.setText(newsFeedItem.getTitle());
 
             imageLoader.load(newsImageView,newsFeedItem.getUrlToImage());
-            newsTimeTextView.setText(newsFeedItem.getPublishedAt());
+                newsTimeTextView.setText(
+                        newsFeedItem.getPublishedAt().substring(0, 10)
+                );
+
+                if (newsItemArrayList.size()> (position +1) ){
+                    DateDiff dateDiff=new DateDiff( newsItemArrayList.get(position).getPublishedAt().substring(0, 10),
+                            newsItemArrayList.get(position+1).getPublishedAt().substring(0, 10)
+                    );
+
+                    long dif=dateDiff.Difference();
+                    if (dif!=0){
+                        dateLayout.setVisibility(View.VISIBLE);
+                        newsDateItem.setText( newsFeedItem.getPublishedAt().substring(0, 10));
+                    }
+                }
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -199,10 +216,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             newsTimeTextView.setText("");
             starImageView.setImageResource(R.drawable.star_empty);
         }
-
-
-
     }
+
+
 
 
    public void removeItem(NewsItem newsItem){
