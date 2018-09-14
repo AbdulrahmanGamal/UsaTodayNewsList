@@ -17,6 +17,7 @@ import com.example.abdulrahman.newslist.base.EmptyViewHolder;
 import com.example.abdulrahman.newslist.base.OnCustomClickListener;
 import com.example.abdulrahman.newslist.base.baseLib.ImageLoader;
 import com.example.abdulrahman.newslist.data.entities.NewsItem;
+import com.example.abdulrahman.newslist.utils.AppConstants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     List<NewsItem> newsItemArrayList;
     ImageLoader imageLoader;
     OnCustomClickListener mOnCustomClickListener;
-    int likesNum = 0;
     NewsItemViewHolder newsFeedViewHolder;
     Context mContext;
     @Inject
@@ -77,8 +77,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void addItems(List<NewsItem> posts) {
-
-        this.newsItemArrayList.clear();
+//        this.newsItemArrayList.clear();
         this.newsItemArrayList.addAll(posts);
         notifyDataSetChanged();
     }
@@ -123,11 +122,10 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         ImageView starImageView;
 
 
+
         public NewsItemViewHolder(View itemView) {
             super(itemView);
-
             ButterKnife.bind(this, itemView);
-
 
         }
 
@@ -142,6 +140,13 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             imageLoader.load(newsImageView,newsFeedItem.getUrlToImage());
             newsTimeTextView.setText(newsFeedItem.getPublishedAt());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnCustomClickListener.onItemClick(newsFeedItem, AppConstants.CLICK_TYPE_NEWS_ITEM);
+                }
+            });
 
         }
         @Override
