@@ -46,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View, Ba
                 .applicationComponent(((NewsListApp) getApplication()).getComponent())
                 .build();
         prefrencesHelperImp=PrefrencesHelperImp.getInstance(getApplicationContext());
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
     }
 
     public ActivityComponent getActivityComponent() {

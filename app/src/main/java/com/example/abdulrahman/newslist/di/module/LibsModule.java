@@ -11,7 +11,6 @@ import com.example.abdulrahman.newslist.libs.PicassoImageLoader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -84,4 +83,6 @@ public class LibsModule {
                 .addInterceptor(interceptor)
                 .cache(cache).build();
     }
+
+
 }

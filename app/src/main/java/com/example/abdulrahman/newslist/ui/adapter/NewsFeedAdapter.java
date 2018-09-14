@@ -35,10 +35,14 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_NORMAL = 1;
     public int widthItem = CardView.LayoutParams.MATCH_PARENT;
     List<NewsItem> newsItemArrayList;
+    List<NewsItem> favListItems=new ArrayList<>();
     ImageLoader imageLoader;
     OnCustomClickListener mOnCustomClickListener;
     NewsItemViewHolder newsFeedViewHolder;
     Context mContext;
+    int FAV_LIST_FLAG=0;
+
+
     @Inject
     public NewsFeedAdapter(List<NewsItem> newsItems, ImageLoader imageLoader,
                            OnCustomClickListener onCustomClickListener) {
@@ -66,10 +70,15 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 return newsFeedViewHolder;
             }
 
-            case DATE:
+            case DATE: {
+
+
+            }
+
+
             default: {
                 EmptyViewHolder emptyViewHolder = new EmptyViewHolder(
-                        LayoutInflater.from(mContext).inflate(R.layout.day_item, parent, false), mOnCustomClickListener, this, null);
+                        LayoutInflater.from(mContext).inflate(R.layout.empty_item, parent, false), mOnCustomClickListener, this, null);
                 return emptyViewHolder;
             }
 
@@ -77,9 +86,19 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void addItems(List<NewsItem> posts) {
-//        this.newsItemArrayList.clear();
+        if (FAV_LIST_FLAG==1){
+            this.newsItemArrayList.clear();
+        }
         this.newsItemArrayList.addAll(posts);
         notifyDataSetChanged();
+        FAV_LIST_FLAG=0;
+    }
+    public void addFavItems(List<NewsItem> posts) {
+        this.newsItemArrayList.clear();
+        this.newsItemArrayList.addAll(posts);
+        notifyDataSetChanged();
+        FAV_LIST_FLAG=1;
+
     }
 
     @Override
@@ -148,6 +167,29 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 }
             });
 
+
+            starImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                        starImageView.setImageResource(R.drawable.star_filled);
+                        mOnCustomClickListener.onItemClick(newsFeedItem,AppConstants.CLICK_TYPE_ADD_FAV);
+                        starImageView.setVisibility(View.GONE);
+
+                }
+            });
+            if (FAV_LIST_FLAG==1){
+                starImageView.setImageResource(R.drawable.delete);
+                starImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mOnCustomClickListener.onItemClick(newsFeedItem,AppConstants.CLICK_TYPE_UNFAV);
+
+                    }
+                });
+
+            }
+
         }
         @Override
         protected void clear() {
@@ -159,6 +201,12 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
 
+
     }
 
+
+   public void removeItem(NewsItem newsItem){
+        newsItemArrayList.remove(newsItem);
+        notifyDataSetChanged();
+    }
 }

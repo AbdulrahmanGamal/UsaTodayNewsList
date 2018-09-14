@@ -6,8 +6,6 @@ import android.content.Context;
 
 import com.example.abdulrahman.newslist.data.DataManager;
 import com.example.abdulrahman.newslist.data.DataManagerImp;
-import com.example.abdulrahman.newslist.data.Local.db.DbHelper;
-import com.example.abdulrahman.newslist.data.Local.db.DbHelperImp;
 import com.example.abdulrahman.newslist.data.Local.prefs.PrefrencesHelper;
 import com.example.abdulrahman.newslist.data.Local.prefs.PrefrencesHelperImp;
 import com.example.abdulrahman.newslist.di.ApplicationContext;
@@ -63,15 +61,10 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    DbHelper providesDbHelper(DbHelperImp dbHelperImp){
-
-        return  dbHelperImp;
-    }
-
-    @Provides
-    @Singleton
     PrefrencesHelper providePreferencesHelper(PrefrencesHelperImp appPreferencesHelper) {
         return appPreferencesHelper;
     }
+
+
 
 }

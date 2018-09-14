@@ -1,43 +1,35 @@
 package com.example.abdulrahman.newslist.data.entities;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-public class NewsItem extends Entity {
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+
+@Entity
+public class NewsItem  {
+    @Id
+    private long id;
 
 
-    @SerializedName("source")
-    @Expose
-    private Source source;
-    @SerializedName("author")
-    @Expose
+
     private String author;
-    @SerializedName("title")
-    @Expose
+
     private String title;
-    @SerializedName("description")
-    @Expose
+
     private String description;
-    @SerializedName("url")
-    @Expose
+
+
     private String url;
-    @SerializedName("urlToImage")
-    @Expose
+
     private String urlToImage;
-    @SerializedName("publishedAt")
-    @Expose
+
+
     private String publishedAt;
-    @SerializedName("content")
-    @Expose
+
     private String content;
 
-    public Source getSource() {
-        return source;
-    }
 
-    public void setSource(Source source) {
-        this.source = source;
-    }
+
+
 
     public String getAuthor() {
         return author;
@@ -95,6 +87,12 @@ public class NewsItem extends Entity {
         this.content = content;
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
 }

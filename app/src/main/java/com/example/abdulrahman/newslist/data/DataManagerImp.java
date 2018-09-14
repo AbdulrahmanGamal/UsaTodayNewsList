@@ -15,11 +15,14 @@ public class DataManagerImp implements DataManager {
     private final Context mContext;
     private final PrefrencesHelper mPrefrencesHelper;
 
+
+
     @Inject
-    public DataManagerImp(@ApplicationContext Context context, PrefrencesHelper prefrencesHelper) {
+    public DataManagerImp(@ApplicationContext Context context, PrefrencesHelper prefrencesHelper)
+     {
         this.mContext = context;
         this.mPrefrencesHelper = prefrencesHelper;
+     }
 
-    }
 
 }

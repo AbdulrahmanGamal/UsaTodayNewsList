@@ -51,4 +51,6 @@ public final class AppConstants {
     public static  final  String CLICK_TYPE_NEWS_ITEM="news_item_clicked";
     public static  final   String CLICK_TYPE_ADD_FAV="add_news_to_fav";
 
+    public static  final   String CLICK_TYPE_UNFAV="delete_news_from_fav";
+
 }
