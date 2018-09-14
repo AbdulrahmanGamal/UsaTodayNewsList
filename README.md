@@ -8,3 +8,4 @@ in this app i used
 - picasso downloader is used to cache images in my app so that no need to reload images from server every time 
 - eventBus is used with rxJava to notify for changes  and get the latest data updates from data layer to the presentation layer
 
+- Object-Box library is used to store favourite news in local database i used this library as it is very clear and easy to implementation 
